@@ -11,10 +11,7 @@ public class dropDownListTest {
 
     @Test
     public void checkActivity() {
-        // драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+        driver = new ChromeDriver();
         // переход на страницу Самоката
         driver.get("https://qa-scooter.praktikum-services.ru/");
         HomeScooter objHomeScooter = new HomeScooter(driver);
