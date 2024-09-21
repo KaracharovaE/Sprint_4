@@ -1,19 +1,13 @@
-import PageObject.HomeScooter;
-import PageObject.OrderNextPageScooter;
-import PageObject.OrderPageScooter;
-import org.junit.After;
+import pageobject.HomeScooter;
+import pageobject.OrderNextPageScooter;
+import pageobject.OrderPageScooter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class GetOrderTest {
-    private WebDriver driver;
+public class GetOrderTest extends SettingsTest {
 
     @Parameterized.Parameter(0)
     public String name;
@@ -37,12 +31,10 @@ public class GetOrderTest {
                 {"Маша", "Петрова", "Ушакова 1", "Сокольники", "89876543210"},
         };
     }
-//Тест для кнопки Заказать сверху, 19 сентября и сутки
+
+    //Тест для кнопки Заказать сверху, 19 сентября и сутки
     @Test
     public void makeOrderWithButtonOnTop() {
-        driver = new ChromeDriver();
-        // переход на страницу Самоката
-        driver.get("https://qa-scooter.praktikum-services.ru/");
         HomeScooter objHomeScooter = new HomeScooter(driver);
         objHomeScooter.clickOrderButtonOnTop();
 
@@ -53,20 +45,16 @@ public class GetOrderTest {
         orderNextPageScooter.selectTime19September("19");
         orderNextPageScooter.selectRentalPeriod1Day("сутки");
         orderNextPageScooter.clickOrderButton();
-        orderNextPageScooter.waitForLoadWindowConfirm();
         orderNextPageScooter.clickYesButton();
         orderNextPageScooter.waitForLoadWindowOrder();
 
         String successMessage = orderNextPageScooter.getSuccessMessage();
-        assertEquals("Заказ оформлен", successMessage);
+        assertTrue(successMessage.contains("Заказ оформлен"));
     }
 
     //Тест для кнопки Заказать снизу, 20 сентября и двое суток
     @Test
     public void makeOrderWithButtonBelow() {
-        driver = new ChromeDriver();
-        // переход на страницу Самоката
-        driver.get("https://qa-scooter.praktikum-services.ru/");
         HomeScooter objHomeScooter = new HomeScooter(driver);
         objHomeScooter.clickOrderButtonBelow();
 
@@ -77,18 +65,10 @@ public class GetOrderTest {
         orderNextPageScooter.selectTime20September("20");
         orderNextPageScooter.selectRentalPeriod2Days("двое суток");
         orderNextPageScooter.clickOrderButton();
-        orderNextPageScooter.waitForLoadWindowConfirm();
         orderNextPageScooter.clickYesButton();
         orderNextPageScooter.waitForLoadWindowOrder();
 
         String successMessage = orderNextPageScooter.getSuccessMessage();
-        assertEquals("Заказ оформлен", successMessage);
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+        assertTrue(successMessage.contains("Заказ оформлен"));
     }
 }

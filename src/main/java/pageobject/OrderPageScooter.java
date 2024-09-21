@@ -1,4 +1,4 @@
-package PageObject;
+package pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,17 +10,17 @@ public class OrderPageScooter {
     private WebDriverWait wait;
 
     // локатор поля "Имя"
-    private By nameField = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/input");
+    private final By nameField = By.xpath("//input[@placeholder= '* Имя']");
     // локатор поля "Фамилия"
-    private By surnameField = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/input");
+    private final By surnameField = By.xpath("//input[@placeholder= '* Фамилия']");
     // локатор поля "Адрес"
-    private By addressField = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[3]/input");
+    private final By addressField = By.xpath("//input[@placeholder= '* Адрес: куда привезти заказ']");
     // локатор поля "Станция метро"
-    private By metroStationField = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[4]/div/div/input");
+    private final By metroStationField = By.xpath("//input[@placeholder= '* Станция метро']");
     // локатор поля "Телефон"
-    private By phoneField = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[5]/input");
+    private final By phoneField = By.xpath("//input[@placeholder= '* Телефон: на него позвонит курьер']");
     // локатор кнопки "Далее"
-    private By nextButton = By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button");
+    private final By nextButton = By.xpath("//button[contains(text(), 'Далее')]");
 
     public OrderPageScooter(WebDriver driver) {
         this.driver = driver;
@@ -41,7 +41,7 @@ public class OrderPageScooter {
 
     public void selectMetroStation(String stationName) {
         driver.findElement(metroStationField).click();
-        By stationLocator = By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[4]/div/div[2]/ul/li[1]/button/div[contains(text(), 'Сокольники') or contains(text(), 'Бульвар Рокоссовского')]");
+        By stationLocator = By.xpath("//div[contains(text(), 'Сокольники') or contains(text(), 'Бульвар Рокоссовского')]");
         driver.findElement(stationLocator).click();
         // Переместить фокус на поле имя для закрытия списка
         driver.findElement(nameField).click();
